@@ -1,3 +1,27 @@
 <resources>
-    <string name="app_name">TDBehaviorTestDemo-Android</string>
+    <string name="app_name">TrustDecision Behavior Demo</string>
+    <string name="brand_name">TrustDecision</string>
+    <string name="demo_subtitle">Behavior Risk Intelligence</string>
+    <string name="login_title">Welcome back</string>
+    <string name="login_description">Sign in to securely continue</string>
+    <string name="register_title">Create account</string>
+    <string name="register_description">Register to explore behavior risk detection</string>
+    <string name="account_hint">Account</string>
+    <string name="password_hint">Password</string>
+    <string name="confirm_password_hint">Confirm password</string>
+    <string name="privacy_agreement">I agree to the Privacy Policy</string>
+    <string name="login">Log in</string>
+    <string name="register">Register</string>
+    <string name="back_to_login">Back to login</string>
+    <string name="privacy_title">Privacy Policy</string>
+    <string name="privacy_scroll_hint">Scroll to the bottom to enable Agree.</string>
+    <string name="privacy_reached_end">You reached the end of the Privacy Policy.</string>
+    <string name="privacy_loading">Loading Privacy Policy…</string>
+    <string name="privacy_load_failed_detail">Unable to load the Privacy Policy: %1$s</string>
+    <string name="privacy_http_error">Privacy Policy returned HTTP %1$d. Check your network and try again.</string>
+    <string name="privacy_ssl_error">Unable to verify the Privacy Policy security certificate.</string>
+    <string name="close">Close</string>
+    <string name="agree">Agree</string>
+    <string name="done">Done</string>
+    <string name="checking_risk">Checking risk…</string>
 </resources>

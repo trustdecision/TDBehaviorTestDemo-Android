@@ -1,47 +1,52 @@
 package com.example.tdbehaviortestdemo_android
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.tdbehaviortestdemo_android.ui.theme.TDBehaviorTestDemoAndroidTheme
+import android.view.inputmethod.EditorInfo
+import android.widget.Button
+import android.widget.CheckBox
+import android.widget.EditText
+import android.widget.TextView
+import android.widget.Toast
 
-class MainActivity : ComponentActivity() {
+class MainActivity : BaseAuthActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContent {
-            TDBehaviorTestDemoAndroidTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+        setContentView(R.layout.activity_login)
+
+        val account = findViewById<EditText>(R.id.account_input)
+        val password = findViewById<EditText>(R.id.password_input)
+        val privacy = findViewById<CheckBox>(R.id.privacy_checkbox)
+        val login = findViewById<Button>(R.id.login_button)
+        val register = findViewById<Button>(R.id.register_button)
+
+        configurePrivacyAgreement(privacy)
+        showSdkStatus(findViewById<TextView>(R.id.sdk_status_text))
+        register.setOnClickListener {
+            startActivity(Intent(this, RegisterActivity::class.java))
+        }
+
+        fun attemptLogin() {
+            val validation = FormValidator.login(
+                account.text.toString(),
+                password.text.toString(),
+                privacy.isChecked
+            )
+            if (validation != null) {
+                Toast.makeText(this, validation, Toast.LENGTH_SHORT).show()
+                return
+            }
+            submitRiskCheck(login, "Login successful · Risk result", register)
+        }
+
+        login.setOnClickListener { attemptLogin() }
+        password.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                attemptLogin()
+                true
+            } else {
+                false
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    TDBehaviorTestDemoAndroidTheme {
-        Greeting("Android")
     }
 }
