@@ -3,12 +3,16 @@ package com.example.tdbehaviortestdemo_android
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
+import android.content.Context
 import android.graphics.Color
+import android.graphics.Rect
 import android.graphics.Typeface
 import android.net.http.SslError
 import android.os.Bundle
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.webkit.SslErrorHandler
 import android.webkit.WebChromeClient
 import android.webkit.WebResourceError
@@ -18,6 +22,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Button
 import android.widget.CheckBox
+import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.ScrollView
@@ -34,6 +39,34 @@ abstract class BaseAuthActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         SdkClient.initializeAndStart(applicationContext)
+    }
+
+    /** 让页面容器持有初始焦点，避免进入页面时第一个输入框自动聚焦、弹出键盘。 */
+    protected fun preventInitialInputFocus() {
+        findViewById<View>(android.R.id.content).apply {
+            isFocusable = true
+            isFocusableInTouchMode = true
+            requestFocus()
+        }
+    }
+
+    /** 点击当前输入框范围之外时，清除焦点并收起软键盘。 */
+    override fun dispatchTouchEvent(event: MotionEvent): Boolean {
+        if (event.action == MotionEvent.ACTION_DOWN) {
+            val focusedView = currentFocus
+            if (focusedView is EditText) {
+                val bounds = Rect()
+                focusedView.getGlobalVisibleRect(bounds)
+                if (!bounds.contains(event.rawX.toInt(), event.rawY.toInt())) {
+                    focusedView.clearFocus()
+                    findViewById<View>(android.R.id.content).requestFocus()
+                    val inputMethodManager =
+                        getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    inputMethodManager.hideSoftInputFromWindow(focusedView.windowToken, 0)
+                }
+            }
+        }
+        return super.dispatchTouchEvent(event)
     }
 
     protected fun configurePrivacyAgreement(checkBox: CheckBox) {

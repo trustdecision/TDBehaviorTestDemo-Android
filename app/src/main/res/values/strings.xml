@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TrustDecision Behavior Demo</string>
+    <string name="app_name">TDBehaviorTestDemo-Android</string>
     <string name="brand_name">TrustDecision</string>
     <string name="demo_subtitle">Behavior Risk Intelligence</string>
     <string name="login_title">Welcome back</string>
@@ -24,4 +24,37 @@
     <string name="agree">Agree</string>
     <string name="done">Done</string>
     <string name="checking_risk">Checking risk…</string>
+    <string name="ticket_rush_entry">Ticket Rush Scene</string>
+    <string name="confirm_order">Confirm Order</string>
+    <string name="refund_policy">Refund Policy</string>
+    <string name="previous_day">Previous day</string>
+    <string name="travel_date">Nov 28 · Sat</string>
+    <string name="next_day">Next day</string>
+    <string name="online_seat_selection">Service: Online seat selection</string>
+    <string name="details">Details ▾</string>
+    <string name="departure_time">08:00</string>
+    <string name="departure_city">Hangzhou\nWenzhou</string>
+    <string name="train_number">G1050  ›</string>
+    <string name="travel_duration">10h 17m</string>
+    <string name="arrival_time">18:17</string>
+    <string name="arrival_city">Guoyang\nQingdao North</string>
+    <string name="second_class">Second Class\n¥102\nAvailable</string>
+    <string name="first_class">First Class\nFrom ¥178\nAvailable</string>
+    <string name="standing_ticket">Standing\n¥102\nAvailable</string>
+    <string name="passenger_name">Tom Cruise</string>
+    <string name="passenger_ticket">Adult · Second Class</string>
+    <string name="passenger_id">3412**********610</string>
+    <string name="add_passenger">＋ Add passenger</string>
+    <string name="order_agreement">By submitting, you agree to the Railway Passenger Transport Terms and Service Terms.</string>
+    <string name="submit_order">Submit Order</string>
+    <string name="ticket_release_countdown">Tickets available in %1$ds</string>
+    <string name="warm_tips_title">ⓘ  Warm Tips</string>
+    <string name="warm_tips_body">1. A successfully issued ticket may be changed or refunded according to railway rules.\n\n2. Train schedules and seat assignments may change due to operating conditions.\n\n3. Keep your contact information valid so important updates can reach you.\n\n4. Seats are assigned according to actual availability when the ticket is issued.</string>
+    <string name="order_processing_title">Please wait</string>
+    <string name="order_processing_message">Processing your order…</string>
+    <string name="order_ready">Order Ready</string>
+    <string name="order_amount">Order amount</string>
+    <string name="pay_now">Pay Now</string>
+    <string name="cancel">Cancel</string>
+    <string name="payment_risk_result_title">Payment submitted · Risk result</string>
 </resources>

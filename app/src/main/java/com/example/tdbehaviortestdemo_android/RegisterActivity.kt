@@ -12,6 +12,7 @@ class RegisterActivity : BaseAuthActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
+        preventInitialInputFocus()
 
         val account = findViewById<EditText>(R.id.account_input)
         val password = findViewById<EditText>(R.id.password_input)

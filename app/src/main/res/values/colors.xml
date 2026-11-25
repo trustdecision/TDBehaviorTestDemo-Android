@@ -6,4 +6,8 @@
     <color name="td_muted">#667085</color>
     <color name="td_background">#F5F8FC</color>
     <color name="td_border">#D0D5DD</color>
+    <color name="ticket_blue">#4098F7</color>
+    <color name="ticket_orange">#FF8A1F</color>
+    <color name="ticket_green">#24B47E</color>
+    <color name="ticket_surface">#F3F5F7</color>
 </resources>

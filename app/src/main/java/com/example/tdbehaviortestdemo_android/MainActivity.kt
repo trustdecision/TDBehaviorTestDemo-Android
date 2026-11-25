@@ -13,17 +13,22 @@ class MainActivity : BaseAuthActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        preventInitialInputFocus()
 
         val account = findViewById<EditText>(R.id.account_input)
         val password = findViewById<EditText>(R.id.password_input)
         val privacy = findViewById<CheckBox>(R.id.privacy_checkbox)
         val login = findViewById<Button>(R.id.login_button)
         val register = findViewById<Button>(R.id.register_button)
+        val ticketRush = findViewById<Button>(R.id.ticket_rush_button)
 
         configurePrivacyAgreement(privacy)
         showSdkStatus(findViewById<TextView>(R.id.sdk_status_text))
         register.setOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))
+        }
+        ticketRush.setOnClickListener {
+            startActivity(Intent(this, TicketRushActivity::class.java))
         }
 
         fun attemptLogin() {
@@ -36,7 +41,7 @@ class MainActivity : BaseAuthActivity() {
                 Toast.makeText(this, validation, Toast.LENGTH_SHORT).show()
                 return
             }
-            submitRiskCheck(login, "Login successful · Risk result", register)
+            submitRiskCheck(login, "Login successful · Risk result", register, ticketRush)
         }
 
         login.setOnClickListener { attemptLogin() }
