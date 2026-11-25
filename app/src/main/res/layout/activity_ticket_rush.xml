@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/ticket_surface"
-    android:fillViewport="true">
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,26 +22,26 @@
             android:layout_height="wrap_content"
             android:background="@color/ticket_blue"
             android:orientation="vertical"
-            android:paddingStart="16dp"
-            android:paddingTop="10dp"
-            android:paddingEnd="16dp"
-            android:paddingBottom="18dp">
+            android:paddingStart="10dp"
+            android:paddingTop="4dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="8dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="52dp"
+                android:layout_height="42dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/ticket_back_button"
                     style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="52dp"
-                    android:layout_height="52dp"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
                     android:minWidth="0dp"
                     android:text="‹"
                     android:textColor="@color/white"
-                    android:textSize="36sp" />
+                    android:textSize="30sp" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -43,7 +50,7 @@
                     android:gravity="center"
                     android:text="@string/confirm_order"
                     android:textColor="@color/white"
-                    android:textSize="22sp"
+                    android:textSize="19sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -51,13 +58,13 @@
                     android:layout_height="wrap_content"
                     android:text="@string/refund_policy"
                     android:textColor="@color/white"
-                    android:textSize="14sp" />
+                    android:textSize="12sp" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="52dp"
-                android:layout_marginTop="8dp"
+                android:layout_height="38dp"
+                android:layout_marginTop="4dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -67,18 +74,18 @@
                     android:layout_weight="1"
                     android:text="@string/previous_day"
                     android:textColor="@color/white"
-                    android:textSize="15sp" />
+                    android:textSize="12sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="44dp"
+                    android:layout_height="34dp"
                     android:background="@color/white"
                     android:gravity="center"
-                    android:paddingStart="18dp"
-                    android:paddingEnd="18dp"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
                     android:text="@string/travel_date"
                     android:textColor="@color/ticket_blue"
-                    android:textSize="17sp"
+                    android:textSize="14sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -88,7 +95,7 @@
                     android:gravity="end"
                     android:text="@string/next_day"
                     android:textColor="@color/white"
-                    android:textSize="15sp" />
+                    android:textSize="12sp" />
             </LinearLayout>
         </LinearLayout>
 
@@ -96,7 +103,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="12dp"
             android:background="@drawable/bg_ticket_card"
             android:orientation="vertical">
@@ -113,20 +120,20 @@
                     android:layout_weight="1"
                     android:text="@string/online_seat_selection"
                     android:textColor="@color/ticket_blue"
-                    android:textSize="14sp" />
+                    android:textSize="11sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/details"
                     android:textColor="@color/ticket_blue"
-                    android:textSize="14sp" />
+                    android:textSize="11sp" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="22dp"
+                android:layout_marginTop="10dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -141,21 +148,21 @@
                         android:layout_height="wrap_content"
                         android:text="@string/departure_time"
                         android:textColor="@color/td_text"
-                        android:textSize="28sp"
+                        android:textSize="22sp"
                         android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:lineSpacingExtra="5dp"
+                        android:layout_marginTop="3dp"
+                        android:lineSpacingExtra="2dp"
                         android:text="@string/departure_city"
                         android:textColor="@color/td_muted"
-                        android:textSize="15sp" />
+                        android:textSize="12sp" />
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="120dp"
+                    android:layout_width="96dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:orientation="vertical">
@@ -165,22 +172,22 @@
                         android:layout_height="wrap_content"
                         android:text="@string/train_number"
                         android:textColor="@color/td_text"
-                        android:textSize="18sp"
+                        android:textSize="15sp"
                         android:textStyle="bold" />
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="2dp"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="5dp"
                         android:background="@color/ticket_blue" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
+                        android:layout_marginTop="3dp"
                         android:text="@string/travel_duration"
                         android:textColor="@color/td_muted"
-                        android:textSize="13sp" />
+                        android:textSize="11sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -195,32 +202,32 @@
                         android:layout_height="wrap_content"
                         android:text="@string/arrival_time"
                         android:textColor="@color/td_text"
-                        android:textSize="28sp"
+                        android:textSize="22sp"
                         android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
+                        android:layout_marginTop="3dp"
                         android:gravity="end"
-                        android:lineSpacingExtra="5dp"
+                        android:lineSpacingExtra="2dp"
                         android:text="@string/arrival_city"
                         android:textColor="@color/td_muted"
-                        android:textSize="15sp" />
+                        android:textSize="12sp" />
                 </LinearLayout>
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginTop="22dp"
+                android:layout_marginTop="10dp"
                 android:background="#E5E9EF" />
 
             <RadioGroup
                 android:id="@+id/seat_group"
                 android:layout_width="match_parent"
-                android:layout_height="128dp"
-                android:layout_marginTop="18dp"
+                android:layout_height="82dp"
+                android:layout_marginTop="8dp"
                 android:checkedButton="@id/second_class_option"
                 android:orientation="horizontal">
 
@@ -233,11 +240,11 @@
                     android:background="@drawable/bg_seat_option"
                     android:button="@null"
                     android:gravity="center"
-                    android:padding="8dp"
+                    android:padding="4dp"
                     android:text="@string/second_class"
                     android:textAlignment="center"
                     android:textColor="@color/seat_option_text"
-                    android:textSize="14sp"
+                    android:textSize="11sp"
                     android:textStyle="bold" />
 
                 <RadioButton
@@ -250,11 +257,11 @@
                     android:background="@drawable/bg_seat_option"
                     android:button="@null"
                     android:gravity="center"
-                    android:padding="8dp"
+                    android:padding="4dp"
                     android:text="@string/first_class"
                     android:textAlignment="center"
                     android:textColor="@color/seat_option_text"
-                    android:textSize="14sp"
+                    android:textSize="11sp"
                     android:textStyle="bold" />
 
                 <RadioButton
@@ -266,11 +273,11 @@
                     android:background="@drawable/bg_seat_option"
                     android:button="@null"
                     android:gravity="center"
-                    android:padding="8dp"
+                    android:padding="4dp"
                     android:text="@string/standing_ticket"
                     android:textAlignment="center"
                     android:textColor="@color/seat_option_text"
-                    android:textSize="14sp"
+                    android:textSize="11sp"
                     android:textStyle="bold" />
             </RadioGroup>
         </LinearLayout>
@@ -279,7 +286,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="12dp"
             android:background="@drawable/bg_ticket_card"
             android:orientation="vertical">
@@ -301,24 +308,24 @@
                         android:layout_height="wrap_content"
                         android:text="@string/passenger_name"
                         android:textColor="@color/td_text"
-                        android:textSize="20sp"
+                        android:textSize="17sp"
                         android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginTop="3dp"
                         android:text="@string/passenger_ticket"
                         android:textColor="@color/ticket_blue"
-                        android:textSize="14sp" />
+                        android:textSize="12sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="4dp"
                         android:text="@string/passenger_id"
                         android:textColor="@color/td_muted"
-                        android:textSize="15sp" />
+                        android:textSize="12sp" />
                 </LinearLayout>
 
                 <TextView
@@ -326,58 +333,43 @@
                     android:layout_height="wrap_content"
                     android:text="✓"
                     android:textColor="@color/ticket_green"
-                    android:textSize="24sp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginTop="18dp"
+                android:layout_marginTop="8dp"
                 android:background="#E5E9EF" />
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="54dp"
+                android:layout_height="38dp"
                 android:gravity="center"
                 android:text="@string/add_passenger"
                 android:textColor="@color/ticket_orange"
-                android:textSize="16sp"
+                android:textSize="13sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="18dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="12dp"
             android:text="@string/order_agreement"
             android:textColor="@color/td_muted"
-            android:textSize="13sp" />
-
-        <Button
-            android:id="@+id/submit_order_button"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="18dp"
-            android:layout_marginEnd="20dp"
-            android:background="@drawable/bg_primary_button"
-            android:enabled="false"
-            android:text="@string/submit_order"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textSize="10sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
-            android:layout_marginTop="22dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="12dp"
-            android:layout_marginBottom="28dp"
+            android:layout_marginBottom="12dp"
             android:background="@drawable/bg_ticket_card"
             android:orientation="vertical">
 
@@ -386,17 +378,34 @@
                 android:layout_height="wrap_content"
                 android:text="@string/warm_tips_title"
                 android:textColor="@color/td_text"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="14dp"
-                android:lineSpacingExtra="4dp"
+                android:layout_marginTop="8dp"
+                android:lineSpacingExtra="2dp"
                 android:text="@string/warm_tips_body"
                 android:textColor="@color/td_muted"
-                android:textSize="14sp" />
+                android:textSize="12sp" />
         </LinearLayout>
     </LinearLayout>
-</ScrollView>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/submit_order_button"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/bg_primary_button"
+        android:enabled="false"
+        android:text="@string/submit_order"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+</LinearLayout>
