@@ -1,4 +1,4 @@
-package com.example.tdbehaviortestdemo_android
+package com.TrustDecision.TDBehaviorTestDemo
 
 import android.annotation.SuppressLint
 import android.app.Activity

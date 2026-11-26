@@ -1,4 +1,4 @@
-package com.example.tdbehaviortestdemo_android
+package com.TrustDecision.TDBehaviorTestDemo
 
 /**
  * Demo 可配置参数统一入口。

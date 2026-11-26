@@ -1,4 +1,4 @@
-package com.example.tdbehaviortestdemo_android
+package com.TrustDecision.TDBehaviorTestDemo
 
 internal object FormValidator {
     fun login(account: String, password: String, privacyAccepted: Boolean): String? {

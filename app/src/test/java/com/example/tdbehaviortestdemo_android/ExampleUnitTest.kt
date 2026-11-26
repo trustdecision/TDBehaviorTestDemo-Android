@@ -1,4 +1,4 @@
-package com.example.tdbehaviortestdemo_android
+package com.TrustDecision.TDBehaviorTestDemo
 
 import org.junit.Test
 

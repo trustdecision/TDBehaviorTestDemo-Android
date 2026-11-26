@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace 'com.example.tdbehaviortestdemo_android'
+    namespace 'com.TrustDecision.TDBehaviorTestDemo'
     compileSdk 36
 
     defaultConfig {
-        applicationId "com.example.tdbehaviortestdemo_android"
+        applicationId "com.TrustDecision.TDBehaviorTestDemo"
         minSdk 24
         targetSdk 36
         versionCode 1

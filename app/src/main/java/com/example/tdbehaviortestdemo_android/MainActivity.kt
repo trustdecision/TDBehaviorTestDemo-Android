@@ -1,4 +1,4 @@
-package com.example.tdbehaviortestdemo_android
+package com.TrustDecision.TDBehaviorTestDemo
 
 import android.content.Intent
 import android.os.Bundle
