@@ -11,7 +11,11 @@ import android.widget.Toast
 
 class MainActivity : BaseAuthActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+        val resettingUi = intent.getBooleanExtra(ResetActivity.EXTRA_RESET_UI, false)
+
+        // 重置启动必须忽略 Android 保存的 View hierarchy，防止 EditText、CheckBox
+        // 在新 Activity 创建时又从 savedInstanceState 恢复旧值。
+        super.onCreate(if (resettingUi) null else savedInstanceState)
         setContentView(R.layout.activity_login)
         preventInitialInputFocus()
 
@@ -21,6 +25,14 @@ class MainActivity : BaseAuthActivity() {
         val login = findViewById<Button>(R.id.login_button)
         val register = findViewById<Button>(R.id.register_button)
         val ticketRush = findViewById<Button>(R.id.ticket_rush_button)
+
+        if (resettingUi) {
+            account.text?.clear()
+            password.text?.clear()
+            resetPrivacyAgreement(privacy)
+            intent.removeExtra(ResetActivity.EXTRA_RESET_UI)
+            preventInitialInputFocus()
+        }
 
         configurePrivacyAgreement(privacy)
         showSdkStatus(findViewById<TextView>(R.id.sdk_status_text))
@@ -54,4 +66,5 @@ class MainActivity : BaseAuthActivity() {
             }
         }
     }
+
 }

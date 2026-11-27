@@ -7,10 +7,10 @@ package com.TrustDecision.TDBehaviorTestDemo
  * 分别维护同一参数而产生不一致。
  */
 internal object DemoConfig {
-    const val PARTNER = ""
-    const val PARTNER_KEY = ""
-    const val APP_KEY = ""
-    const val COUNTRY = ""
+    const val PARTNER = "LPZ13"
+    const val PARTNER_KEY = "3df50dab532e46ad8d93d01d9df7e4de"
+    const val APP_KEY = "5978b5f9fd6a8bf5de02f0054d0dccec"
+    const val COUNTRY = "CN"
 
     const val BEHAVIOR_HOST = ""
     const val BEHAVIOR_CONFIG_URL = ""

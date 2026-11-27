@@ -98,7 +98,9 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:buttonTint="@color/td_blue"
+                    android:button="@null"
+                    android:drawableStart="@drawable/privacy_checkbox_image"
+                    android:drawablePadding="8dp"
                     android:text="@string/privacy_agreement"
                     android:textColor="@color/td_text"
                     android:textSize="13sp" />

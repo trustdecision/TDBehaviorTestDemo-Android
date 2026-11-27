@@ -3,18 +3,20 @@ package com.TrustDecision.TDBehaviorTestDemo
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
+import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
 import android.graphics.Rect
 import android.graphics.Typeface
+import android.graphics.drawable.ColorDrawable
 import android.net.http.SslError
 import android.os.Bundle
+import android.view.Gravity
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.webkit.SslErrorHandler
-import android.webkit.WebChromeClient
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
@@ -23,15 +25,24 @@ import android.webkit.WebViewClient
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
+import android.widget.FrameLayout
 import android.widget.LinearLayout
-import android.widget.ProgressBar
 import android.widget.ScrollView
 import android.widget.TextView
 import android.widget.Toast
 
+private class PrivacyWebView(context: Context) : WebView(context) {
+    var onPrivacyScrollChanged: (() -> Unit)? = null
+
+    override fun onScrollChanged(left: Int, top: Int, oldLeft: Int, oldTop: Int) {
+        super.onScrollChanged(left, top, oldLeft, oldTop)
+        onPrivacyScrollChanged?.invoke()
+    }
+}
+
 abstract class BaseAuthActivity : Activity() {
     private var privacyReviewed = false
-    private var privacyDialog: AlertDialog? = null
+    private var privacyDialog: Dialog? = null
     private var resultDialog: AlertDialog? = null
     private var resumed = false
     private var pendingResult: Pair<String, String>? = null
@@ -83,6 +94,14 @@ abstract class BaseAuthActivity : Activity() {
         }
     }
 
+    /** 重置自动化场景，避免进程仍存活时沿用上一次隐私确认状态。 */
+    protected fun resetPrivacyAgreement(checkBox: CheckBox) {
+        privacyDialog?.dismiss()
+        privacyDialog = null
+        privacyReviewed = false
+        checkBox.isChecked = false
+    }
+
     protected fun showSdkStatus(statusView: TextView) {
         statusView.text = SdkClient.sdkStatus()
     }
@@ -126,25 +145,66 @@ abstract class BaseAuthActivity : Activity() {
         if (privacyDialog?.isShowing == true) return
 
         val density = resources.displayMetrics.density
-        val webViewHeight = (resources.displayMetrics.heightPixels * 0.58f).toInt()
-        val container = LinearLayout(this).apply {
+        fun dp(value: Int) = (value * density).toInt()
+
+        // 与 iOS TDPrivacyViewController 保持相同层级：
+        // 58dp 顶栏、状态提示、可滚动网页、底部 52dp 蓝色 Agree 按钮。
+        val root = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
-            setPadding((16 * density).toInt(), (8 * density).toInt(),
-                (16 * density).toInt(), 0)
+            setBackgroundColor(Color.WHITE)
+        }
+        val header = FrameLayout(this).apply {
+            layoutParams = LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                dp(58)
+            )
+        }
+        val title = TextView(this).apply {
+            text = getString(R.string.privacy_title)
+            setTextColor(getColor(R.color.td_text))
+            textSize = 22f
+            typeface = Typeface.DEFAULT_BOLD
+            gravity = Gravity.CENTER
+            layoutParams = FrameLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                Gravity.CENTER
+            )
+        }
+        val close = Button(this).apply {
+            text = getString(R.string.close)
+            isAllCaps = false
+            setTextColor(getColor(R.color.td_blue))
+            setBackgroundColor(Color.TRANSPARENT)
+            minWidth = 0
+            minHeight = 0
+            setPadding(dp(10), 0, dp(10), 0)
+            layoutParams = FrameLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                Gravity.START or Gravity.CENTER_VERTICAL
+            ).apply { marginStart = dp(8) }
         }
         val status = TextView(this).apply {
             text = getString(R.string.privacy_loading)
             setTextColor(getColor(R.color.td_muted))
             textSize = 13f
-            setPadding(0, 0, 0, (8 * density).toInt())
-        }
-        val progress = ProgressBar(this, null, android.R.attr.progressBarStyleHorizontal).apply {
-            max = 100
-        }
-        val webView = WebView(this).apply {
+            gravity = Gravity.CENTER_VERTICAL
             layoutParams = LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
-                webViewHeight
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            ).apply {
+                marginStart = dp(16)
+                marginEnd = dp(16)
+                topMargin = dp(6)
+                bottomMargin = dp(6)
+            }
+        }
+        val webView = PrivacyWebView(this).apply {
+            layoutParams = LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                0,
+                1f
             )
             settings.javaScriptEnabled = true
             settings.domStorageEnabled = true
@@ -152,45 +212,58 @@ abstract class BaseAuthActivity : Activity() {
             isVerticalScrollBarEnabled = true
             setBackgroundColor(Color.WHITE)
         }
-        container.addView(status)
-        container.addView(progress, LinearLayout.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            (3 * density).toInt()
-        ))
-        container.addView(webView)
+        val agree = Button(this).apply {
+            text = getString(R.string.agree)
+            isAllCaps = false
+            textSize = 16f
+            typeface = Typeface.DEFAULT_BOLD
+            setTextColor(Color.WHITE)
+            setBackgroundResource(R.drawable.bg_privacy_agree_button)
+            isEnabled = false
+            alpha = 0.45f
+            layoutParams = LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                dp(52)
+            ).apply {
+                marginStart = dp(20)
+                marginEnd = dp(20)
+                topMargin = dp(12)
+                bottomMargin = dp(12)
+            }
+        }
+
+        header.addView(title)
+        header.addView(close)
+        root.addView(header)
+        root.addView(status)
+        root.addView(webView)
+        root.addView(agree)
 
         var pageLoaded = false
         var pageLoadFailed = false
-        val dialog = AlertDialog.Builder(this)
-            .setTitle(R.string.privacy_title)
-            .setView(container)
-            .setNegativeButton(R.string.close, null)
-            .setPositiveButton(R.string.agree) { _, _ ->
-                privacyReviewed = true
-                checkBox.isChecked = true
-            }
-            .create()
+        val dialog = Dialog(this, android.R.style.Theme_Material_Light_NoActionBar).apply {
+            setContentView(root)
+            setCancelable(true)
+            window?.setBackgroundDrawable(ColorDrawable(Color.WHITE))
+        }
         privacyDialog = dialog
 
         fun updateReachedBottom() {
             if (pageLoaded && !webView.canScrollVertically(1)) {
                 status.text = getString(R.string.privacy_reached_end)
-                dialog.getButton(AlertDialog.BUTTON_POSITIVE)?.isEnabled = true
+                agree.isEnabled = true
+                agree.alpha = 1f
             }
         }
 
-        webView.setOnScrollChangeListener { _, _, _, _, _ -> updateReachedBottom() }
-        webView.webChromeClient = object : WebChromeClient() {
-            override fun onProgressChanged(view: WebView, newProgress: Int) {
-                progress.progress = newProgress
-            }
-        }
+        // 通过 WebView.onScrollChanged 回调，避免依赖 API 23 才加入的
+        // View.setOnScrollChangeListener，兼容 Android 5。
+        webView.onPrivacyScrollChanged = { updateReachedBottom() }
         webView.webViewClient = object : WebViewClient() {
             override fun onPageFinished(view: WebView, url: String) {
                 // WebView 加载错误页后仍可能回调 onPageFinished，不能因此开放 Agree。
                 if (pageLoadFailed) return
                 pageLoaded = true
-                progress.visibility = View.GONE
                 status.text = getString(R.string.privacy_scroll_hint)
                 view.postDelayed({ updateReachedBottom() }, 300)
             }
@@ -203,12 +276,12 @@ abstract class BaseAuthActivity : Activity() {
                 if (request.isForMainFrame) {
                     pageLoadFailed = true
                     pageLoaded = false
-                    progress.visibility = View.GONE
                     status.text = getString(
                         R.string.privacy_load_failed_detail,
                         error.description
                     )
-                    dialog.getButton(AlertDialog.BUTTON_POSITIVE)?.isEnabled = false
+                    agree.isEnabled = false
+                    agree.alpha = 0.45f
                 }
             }
 
@@ -220,12 +293,12 @@ abstract class BaseAuthActivity : Activity() {
                 if (request.isForMainFrame) {
                     pageLoadFailed = true
                     pageLoaded = false
-                    progress.visibility = View.GONE
                     status.text = getString(
-                        R.string.privacy_http_error,
-                        errorResponse.statusCode
+                        R.string.privacy_load_failed_detail,
+                        "HTTP ${errorResponse.statusCode}"
                     )
-                    dialog.getButton(AlertDialog.BUTTON_POSITIVE)?.isEnabled = false
+                    agree.isEnabled = false
+                    agree.alpha = 0.45f
                 }
             }
 
@@ -237,13 +310,28 @@ abstract class BaseAuthActivity : Activity() {
                 handler.cancel()
                 pageLoadFailed = true
                 pageLoaded = false
-                progress.visibility = View.GONE
-                status.text = getString(R.string.privacy_ssl_error)
-                dialog.getButton(AlertDialog.BUTTON_POSITIVE)?.isEnabled = false
+                status.text = getString(
+                    R.string.privacy_load_failed_detail,
+                    error.toString()
+                )
+                agree.isEnabled = false
+                agree.alpha = 0.45f
             }
         }
+
+        close.setOnClickListener { dialog.dismiss() }
+        agree.setOnClickListener {
+            privacyReviewed = true
+            checkBox.isChecked = true
+            dialog.dismiss()
+        }
         dialog.setOnShowListener {
-            dialog.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = false
+            dialog.window?.setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
+            agree.isEnabled = false
+            agree.alpha = 0.45f
             pageLoadFailed = false
             webView.loadUrl(DemoConfig.PRIVACY_POLICY_URL)
         }

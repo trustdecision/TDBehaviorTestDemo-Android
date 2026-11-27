@@ -36,6 +36,23 @@
             android:exported="false"
             android:label="@string/confirm_order"
             android:theme="@style/Theme.TDBehaviorTestDemoAndroid" />
+        <activity
+            android:name=".ResetActivity"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:noHistory="true"
+            android:theme="@android:style/Theme.NoDisplay">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="reset"
+                    android:scheme="tdbehavior-test-demo" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
